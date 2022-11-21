@@ -80,13 +80,53 @@
       font-weight: bolder; 
     }
 
+    .display-amount {
+      background-color: hsl(183, 100%, 15%);
+      border-radius: 10px;
+    }
+
+    .results .amounts {
+      color: white;
+    }
+
+    .results .per-person {
+      color:hsl(172, 67%, 45%);
+      font-size: 0.875rem;
+    }
+
+    .money {
+      font-size: 2rem;
+      color:hsl(172, 67%, 45%);
+      font-weight: bold;
+    }
+    
+    body {
+      display:flex; 
+      flex-direction:column; 
+      justify-content:center;
+      min-height:100vh;
+    }
+
+    .reset-btn {
+      background-color: hsl(184, 33%, 41%);
+      border-radius: 5px;
+      height: 40px;
+      border: none;
+      font-weight: bold;
+      color: hsl(183, 100%, 15%);
+    }
+
+    .reset-btn:hover {
+      background-color: hsl(172, 67%, 45%);
+    }
+
   </style>
 </head>
 <body>
 
   <div class="container-fluid">
     <div class="row justify-content-center mb-4">
-      <div class="col-2">
+      <div class="col-4 text-center">
         <h1 class="splitter">SPLI<br>TTER</h1>
       </div>
     </div>
@@ -96,7 +136,7 @@
           <div class="calculation py-1">
             <div class="m-4">
               <div class="row justify-content-center">
-                <div class="col-12 col-md-6">
+                <div class="col-12 col-md-6 mb-5 mb-md-0">
                   <div class="bill-amount mb-4 position-relative">
                     <label class="mb-2" for="bill-amount">Bill</label><br>
                     <input class="w-100 text-end" type="text" id="bill-amount" name="bill-amount">
@@ -127,36 +167,46 @@
                       </div>
                     </div>
                   </div>
-                  <div class="number-people mb-2 position-relative">
+                  <div class="number-people position-relative mb-2">
                     <label class="mb-2" for="num-people">Number of People</label><br>
                     <input class="w-100 text-end" type="text" id="num-people" name="num-people">
                     <span class="input-logo"><img src="/images/icon-person.svg"></span>
                   </div>
                 </div>
                 <div class="col-12 col-md-6">
-                  
+                  <div class="display-amount h-100 w-100" style="display:flex; flex-direction:column; flex:1;">
+                    <div class="results pt-4 ps-4 pb-5 pb-md-0">
+                      <div class="row justify-content-between">
+                        <div class="col-6 pt-2">
+                          <p class="amounts m-0">Tip Amount</p>
+                          <p class="per-person">/ person</p>
+                        </div>
+                        <div class="col-6 ps-0 pe-4 text-center">
+                          <span class="money">$<span id="tip-per-person">0.00</span></span>
+                        </div>
+                      </div>
+                      <div class="mt-4 row justify-content-between">
+                        <div class="col-6 pt-2">
+                          <p class="amounts m-0">Total</p>
+                          <p class="per-person">/ person</p>
+                        </div>
+                        <div class="col-6 ps-0 pe-4 text-center">
+                          <span class="money">$<span id="total-per-person">0.00</span></span>
+                        </div>
+                      </div>
+                    </div>
+                    <button class="reset-btn mt-auto mx-auto mb-4 w-75">RESET</button>
+                  </div>
                 </div>
               </div>
             </div>
-          </div>
-          <div class="results">
-
           </div>
         </div>
       </div>
     </div>
   </div>
 
-
-  Tip Amount
-  / person
-
-  Total
-  / person
-
-  Reset
-  
-  <div class="attribution">
+  <div class="attribution mt-5">
     Challenge by <a href="https://www.frontendmentor.io?ref=challenge" target="_blank">Frontend Mentor</a>. 
     Coded by <a href="#">Francis Bell</a>.
   </div>
