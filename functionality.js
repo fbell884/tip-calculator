@@ -110,6 +110,7 @@ reset.addEventListener("click", () => {
         BillAmountField.value = "";
         numPeopleField.value = "";
         customPercent.value = "";
+        numPeopleField.placeholder = "1";
 
 });
 

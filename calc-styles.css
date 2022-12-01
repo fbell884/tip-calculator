@@ -99,6 +99,12 @@
         font-size: 2rem;
       }
     }
+
+    @media (max-width: 768px) {
+      .money {
+        font-size: 1.75rem;
+      }
+    }
     
     body {
       display:flex; 
