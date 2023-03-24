@@ -1,27 +1,31 @@
 // Get DOM Elements
-var reset = document.getElementById("reset");
-var tipInput = document.querySelectorAll(".percentage");
-var calcInputs = document.querySelectorAll(".calc-inputs")
-var tipPerPerson = document.getElementById("tip-per-person");
-var totalPerPerson = document.getElementById("total-per-person");
-var BillAmountField = document.getElementById("bill-amount");
-var numPeopleField = document.getElementById("num-people");
-var customPercent = document.getElementById("custom-percent");
-var errorMsg = document.getElementById("num-people-error");
-var radioButtons = document.getElementsByName("percentages");
+const reset = document.getElementById("reset");
+const tipInput = document.querySelectorAll(".percentage");
+const calcInputs = document.querySelectorAll(".calc-inputs")
+const tipPerPerson = document.getElementById("tip-per-person");
+const totalPerPerson = document.getElementById("total-per-person");
+const BillAmountField = document.getElementById("bill-amount");
+const numPeopleField = document.getElementById("num-people");
+const customPercent = document.getElementById("custom-percent");
+const errorMsg = document.getElementById("num-people-error");
+const radioButtons = document.getElementsByName("percentages");
 
-// globally declare variables. 
-var tipAmount = 0;
-var tipDivided = 0;
-var total = 0;
-var billPerPerson
-var billAmount = 0;
-var numPeople = 1;
-var tipPercent = 0;
+// declare variables. 
+let tipAmount = 0;
+let tipDivided = 0;
+let total = 0;
+let billPerPerson
+let billAmount = 0;
+let numPeople = 1;
+let tipPercent = 0;
 
 // Handle Tip Amount Events
 calcInputs.forEach(calcs => {
     calcs.addEventListener("input", (e) => {
+
+        replaceInvalidChars(calcs);
+        displayError(calcs.value, calcs.id);
+
         if (e.target.id == "bill-amount") {
             billAmount = Number(e.target.value);
             if (billAmount == 0 || tipPercent == 0) {
@@ -35,21 +39,17 @@ calcInputs.forEach(calcs => {
                 displayResults();
             }
         }
+
         else {
-            var numPeopleValidation = e.target.value;
+            let numPeopleValidation = e.target.value;
             numPeople = Number(e.target.value);
             if (numPeople < 1 && numPeopleValidation == "") {
                 numPeople == 1;
             }
             else if(numPeople < 1 && numPeopleValidation !== "") {
-                numPeopleField.classList.add("error-box");
-                errorMsg.classList.remove("d-none");
                 e.target.placeholder = numPeople;
             }
             else {
-                numPeopleField.classList.remove("error-box");
-                errorMsg.classList.add("d-none");
-                e.target.placeholder = numPeople;
                 tipDivided = tipAmount/numPeople;
                 billPerPerson = billAmount/numPeople;       
             }
@@ -58,6 +58,8 @@ calcInputs.forEach(calcs => {
         }
     });
 });
+
+
 
 
 tipInput.forEach(tips => {
@@ -77,7 +79,7 @@ tipInput.forEach(tips => {
 
 function numPeopleHandler() {
     if (numPeopleField.value !== "") {
-        var pplAmount = Number(numPeopleField.value);
+        let pplAmount = Number(numPeopleField.value);
         tipDivided = tipAmount/pplAmount;
         billPerPerson = billAmount/pplAmount;
     }
@@ -89,7 +91,7 @@ function numPeopleHandler() {
 
 function displayResults() {
     total = tipDivided + billPerPerson;
-    totalPerPerson.innerHTML = total.toFixed(2);
+    (!isNaN(total)) ? totalPerPerson.innerHTML = total.toFixed(2) : totalPerPerson.innerHTML = "Enter Number > 0";
     tipPerPerson.innerHTML = tipDivided.toFixed(2);
 }
 
@@ -123,6 +125,43 @@ customPercent.addEventListener("focus", () => {
         }
     })
 });
+
+customPercent.addEventListener("input", () => {
+    replaceInvalidChars(customPercent);
+});
+
+
+const inputValidation = (calcValue) => {
+    const isValidInput = (/^[+-]?[0-9]{1,3}(?:,?[0-9]{3})*(?:\.[0-9]{2})?$/).test(calcValue) ? true : false;
+    return isValidInput;
+}
+
+const replaceInvalidChars = (calc) => {
+    return calc.id === 'bill-amount' ? calc.value = calc.value.replace(/[^0-9.]/g, '') : calc.value = calc.value.replace(/[^0-9]/g, '')
+}
+
+const displayError = (calcValue, inputId) => {
+    let calcInput = document.getElementById(inputId);
+    let errorText = calcInput.previousElementSibling.previousElementSibling; 
+  
+    if (!inputValidation(calcValue) || Number(calcValue) == 0) {
+        radioButtons.forEach(radio => {
+            radio.checked = false;
+            radio.disabled = true;
+        });
+        errorText.classList.remove("d-none");
+        calcInput.classList.add('error-box');
+    }
+    else {
+        radioButtons.forEach(radio => {
+            radio.disabled = false;
+        });
+        errorText.classList.add("d-none");
+        calcInput.classList.remove('error-box');
+    }
+
+}
+
 
 // SERVICE WORKER FOR PWA
 if ('serviceWorker' in navigator) {
