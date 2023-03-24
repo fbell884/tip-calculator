@@ -89,6 +89,6 @@ I want to continue learning and become more confident in my validation skills.
 
 ## Author
 
-- Website - [Portfolio Site](https://francisbellportfolio.netlify.app/)
+- Website - [Portfolio Site](https://francisbell.netlify.app/)
 - Frontend Mentor - [@fbell884](https://www.frontendmentor.io/profile/fbell884)
 - LinkedIn - [@yourusername](https://www.linkedin.com/in/francis-bell/)
